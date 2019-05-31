@@ -13,8 +13,8 @@ class Person {
 }
 
 class Instructor extends Person {
-    constructor(attr, grade) {
-        super(attr, grade);
+    constructor(attr, subject) {
+        super(attr, subject);
         this.specialty = attr.specialty;
         this.favLanguage = attr.favLanguage;
         this.catchPhrase = attr.catchPhrase;
@@ -25,6 +25,9 @@ class Instructor extends Person {
     grade(subject) {
         return `${this.name} receives a perfect score on ${subject}`
     };
+    randomGrade() {
+        return this.grade - Math.random();
+    }
 }
 
 
@@ -34,14 +37,18 @@ class Student extends Instructor {
         this.previousBackground = attr.previousBackground;
         this.className = attr.className;
         this.favSubjects = attr.favSubjects;
+        this.grade = attr.grade;
     }
     listsSubjects() {
+        for (let i = 0; i < this.favSubjects.length; i++) {
+            console.log(this.favSubjects[i]);
+        }
         return `${this.favSubjects}`;
     };
-    PRAssignment() {
+    PRAssignment(subject) {
         return `${this.name} has submitted a PR for ${subject}`
     };
-    sprintChallenge() {
+    sprintChallenge(subject) {
         return `${this.name} has begun spring challenge on ${subject}`
     };
 }
@@ -56,8 +63,8 @@ class ProjectManager extends Instructor {
     standup(channel) {
         return `${this.name} announces to ${channel}, @channel standy times!`
     };
-    debugsCode(subject) {
-        return `${this.name} debugs ${student.name}'s code on ${subject}`
+    debugsCode(subject, student) {
+        return `${this.name} debugs ${student}'s code on ${subject}`
     }
 }
 
@@ -77,20 +84,24 @@ const Billy = new Student({
     name: 'Billy',
     previousBackground: 'Iowa',
     className: 37,
-    favSubjects: 'JavaScript, C, Python',
+    favSubjects: ['JavaScript', 'HTML', 'CSS'],
     specialty: 'Front-end',
-    catchPhrase: `Don't forget the homies`
+    catchPhrase: `Don't forget the homies`,
+    grade: 73
 });
 
 const Chad = new ProjectManager({
     name: 'Chad',
     gradClassName: 'Nebraska',
     favInstructors: 'Dan',
-    favSubjects: 'JavaScript, C, HTML',
+    favSubjects: ['JavaScript', 'HTML', 'CSS'],
     specialty: 'Back-end',
     catchPhrase: `Lambda rules`
 });
 
 console.log(Fred.grade('Javascript'));
+console.log(Billy.speak());
 console.log(Billy.listsSubjects());
 console.log(Chad.standup('webpt_9'));
+console.log(Chad.debugsCode('HTML', 'Phil'));
+console.log(Billy.randomGrade());
